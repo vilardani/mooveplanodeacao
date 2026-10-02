@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Plano de Ação Moove 804</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>:root{color-scheme:light}body{margin:0;font-family:system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: painel-ferramenta — resumo no topo, barra de filtros, tabela agrupada por categoria. */
+:root{
+  --bg:#f3f1ec; --surface:#ffffff; --surface-2:#faf8f3; --ink:#232019; --muted:#6b6459;
+  --line:#e2ddd2; --accent:#9a6a12; --accent-soft:#f2e7cf;
+  --todo:#6b6459; --prog:#1f5f8b; --done:#2f6b32; --block:#9e2b1b;
+  --prio-alta:#9e2b1b; --prio-media:#9a6a12; --prio-baixa:#6b6459;
+  --chip-bg:#efeadf;
+  color-scheme:light;
+  font-family:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#17150f; --surface:#211e17; --surface-2:#1b1812; --ink:#ece6da; --muted:#a69d8d;
+  --line:#352f24; --accent:#d8a23e; --accent-soft:#3a2f17;
+  --todo:#a69d8d; --prog:#6db2de; --done:#7cc07f; --block:#e8806f;
+  --prio-alta:#e8806f; --prio-media:#d8a23e; --prio-baixa:#a69d8d;
+  --chip-bg:#2c271d; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#17150f; --surface:#211e17; --surface-2:#1b1812; --ink:#ece6da; --muted:#a69d8d;
+  --line:#352f24; --accent:#d8a23e; --accent-soft:#3a2f17;
+  --todo:#a69d8d; --prog:#6db2de; --done:#7cc07f; --block:#e8806f;
+  --prio-alta:#e8806f; --prio-media:#d8a23e; --prio-baixa:#a69d8d;
+  --chip-bg:#2c271d; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-block:22px;padding-left:16px;padding-right:16px}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(1.5rem,3.5vw,2rem);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.86rem;margin:.35rem 0 0;max-width:62ch;line-height:1.5}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+header .live{display:inline-flex;align-items:center;gap:.4em;font-size:.72rem;color:var(--muted);margin-top:.5rem}
+.dot{width:.5em;height:.5em;border-radius:50%;background:var(--muted)}
+.dot.on{background:var(--done)}
+.dot.ro{background:var(--prio-media)}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 6px}
+@media(max-width:620px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.tile .n{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;line-height:1}
+.tile .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem}
+.tile.s-prog{border-left:3px solid var(--prog)}
+.tile.s-done{border-left:3px solid var(--done)}
+.tile.s-block{border-left:3px solid var(--block)}
+.tile.s-todo{border-left:3px solid var(--todo)}
+
+/* toolbar */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0}
+.bar .grow{flex:1 1 180px;min-width:0}
+input,select,textarea,button{font:inherit;color:var(--ink)}
+input[type=text],input[type=search],input[type=date],select,textarea{
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+textarea{resize:vertical;min-height:64px;line-height:1.45}
+label.f{display:block;font-size:.73rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;font-size:.86rem}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+:root[data-theme="dark"] .btn.primary,@media(prefers-color-scheme:dark){.btn.primary{color:#1b1812}}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn.ghost{background:transparent}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:900px}
+thead th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.86rem;line-height:1.45}
+tr.cat td{background:var(--surface-2);font-weight:600;font-family:'Fraunces',serif;font-size:.95rem;color:var(--accent)}
+tr.cat td .c-count{font-family:'IBM Plex Sans',sans-serif;font-weight:400;font-size:.72rem;color:var(--muted);margin-left:.5em}
+.acao-txt{font-weight:500}
+.obs{color:var(--muted);font-size:.8rem;margin-top:.25rem}
+td.num{width:34px;color:var(--muted)}
+.chip{display:inline-block;padding:.15em .6em;border-radius:999px;font-size:.72rem;font-weight:600;background:var(--chip-bg);white-space:nowrap}
+.chip.cat{background:var(--accent-soft);color:var(--accent)}
+.prio-Alta{color:var(--prio-alta)} .prio-Média{color:var(--prio-media)} .prio-Baixa{color:var(--prio-baixa)}
+select.status{border-radius:999px;padding:4px 10px;font-size:.74rem;font-weight:600;border:1px solid var(--line);background:var(--chip-bg)}
+select.status[data-s="Em andamento"]{color:var(--prog)} select.status[data-s="Concluída"]{color:var(--done)}
+select.status[data-s="Bloqueada"]{color:var(--block)} select.status[data-s="A fazer"]{color:var(--todo)}
+.rowact{display:flex;gap:6px;white-space:nowrap}
+.iconbtn{cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 8px;font-size:.75rem}
+.iconbtn:hover{border-color:var(--accent)}
+.iconbtn.del:hover{border-color:var(--block);color:var(--block)}
+.date-cell{white-space:nowrap}
+.date-late{color:var(--block)}
+
+/* dashboard */
+.dash{display:grid;grid-template-columns:1.1fr 1fr 1.5fr 1fr;gap:12px;margin:16px 0 4px}
+@media(max-width:900px){.dash{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.dash{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.card h3{margin:0 0 10px;font-family:'Fraunces',serif;font-size:.92rem;font-weight:600}
+.progwrap{height:14px;border-radius:999px;overflow:hidden;display:flex;background:var(--chip-bg);margin:8px 0 12px}
+.progwrap span{display:block;height:100%}
+.bigpct{font-family:'Fraunces',serif;font-size:2.1rem;font-weight:600;line-height:1}
+.bigpct small{font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;color:var(--muted);font-weight:400}
+.statchips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.statchip{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:.74rem;color:var(--muted)}
+.statchip b{font-family:'IBM Plex Mono',monospace;color:var(--ink);font-size:.95rem}
+.statchip.warn b{color:var(--block)}
+.legend{display:flex;flex-direction:column;gap:7px;font-size:.78rem}
+.legend .li{display:flex;align-items:center;gap:8px}
+.legend .li .lc{margin-left:auto;font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.sw{width:.8em;height:.8em;border-radius:3px;flex:none}
+.donutwrap{display:flex;align-items:center;gap:16px}
+.donut{width:108px;height:108px;border-radius:50%;flex:none;position:relative}
+.donut .hole{position:absolute;inset:22%;background:var(--surface);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:'IBM Plex Mono',monospace;line-height:1.1}
+.donut .hole .hn{font-size:1.15rem;font-weight:600}
+.donut .hole .hl{font-size:.6rem;color:var(--muted)}
+.catbar{display:flex;flex-direction:column;gap:10px}
+.catrow .rt{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.78rem}
+.catrow .rt .ct{font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.seg{height:12px;border-radius:999px;overflow:hidden;display:flex;background:var(--chip-bg)}
+.seg span{display:block;height:100%}
+.pbars{display:flex;flex-direction:column;gap:11px}
+.pbar .rt{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.78rem}
+.pbar .rt .ct{font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.pbar .track{height:10px;background:var(--chip-bg);border-radius:999px;overflow:hidden}
+.pbar .fill{height:100%;border-radius:999px}
+#dash[hidden]{display:none}
+
+/* empty / banners */
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+.empty h3{font-family:'Fraunces',serif;color:var(--ink);margin:0 0 .4rem}
+.banner{background:var(--accent-soft);color:var(--accent);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:.8rem;margin:12px 0}
+
+/* modal */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow:auto;z-index:20}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;padding:20px}
+.modal h2{font-family:'Fraunces',serif;margin:0 0 14px;font-size:1.2rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.grid2{grid-template-columns:1fr}}
+.field{margin-bottom:12px}
+.modal-foot{display:flex;justify-content:space-between;gap:10px;margin-top:8px;align-items:center}
+.clist{max-height:46vh;overflow:auto;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.cbox{background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:10px 12px}
+.cbox .meta{font-size:.7rem;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between;gap:10px}
+.cbox .meta b{color:var(--ink);font-weight:600}
+.cbox .txt{font-size:.86rem;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.cempty{color:var(--muted);font-size:.85rem;padding:16px 0;text-align:center}
+.iconbtn.cmt:hover{border-color:var(--accent);color:var(--accent)}
+.ccount{display:inline-block;min-width:1.3em;text-align:center;background:var(--accent-soft);color:var(--accent);border-radius:999px;font-size:.66rem;font-weight:700;padding:0 .35em;margin-left:.35em;font-family:'IBM Plex Mono',monospace}
+.foot{color:var(--muted);font-size:.72rem;margin-top:26px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Plano de Ação — Residencial Moove Tijuca</h1>
+    <div class="live"><span class="dot" id="dot"></span><span id="livetxt">conectando…</span></div>
+  </header>
+
+  <section class="tiles" id="tiles" aria-label="Resumo">
+    <div class="tile s-todo"><div class="n mono" id="t-total">—</div><div class="l">Total</div></div>
+    <div class="tile s-todo"><div class="n mono" id="t-todo">—</div><div class="l">A fazer</div></div>
+    <div class="tile s-prog"><div class="n mono" id="t-prog">—</div><div class="l">Em andamento</div></div>
+    <div class="tile s-done"><div class="n mono" id="t-done">—</div><div class="l">Concluídas</div></div>
+    <div class="tile s-block"><div class="n mono" id="t-block">—</div><div class="l">Bloqueadas</div></div>
+  </section>
+
+  <section id="dash" class="dash" aria-label="Dashboard analítico"></section>
+
+  <div id="robanner" class="banner" hidden>Modo somente leitura — você pode acompanhar, mas não editar. Peça acesso de edição à proprietária responsável para alterar o plano.</div>
+
+  <div class="bar">
+    <div class="grow"><input type="search" id="q" placeholder="Buscar ação, responsável, observação…" aria-label="Buscar"></div>
+    <select id="f-cat" aria-label="Filtrar por categoria" style="width:auto"><option value="">Todas as categorias</option></select>
+    <select id="f-status" aria-label="Filtrar por status" style="width:auto">
+      <option value="">Todos os status</option><option>A fazer</option><option>Em andamento</option><option>Concluída</option><option>Bloqueada</option>
+    </select>
+    <button class="btn ghost" id="toggledash">Ocultar painel</button>
+    <button class="btn primary" id="add" hidden>+ Nova ação</button>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th>#</th><th>Ação</th><th>Status</th><th>Prioridade</th><th>Responsável</th><th>Início</th><th>Prazo</th><th></th>
+      </tr></thead>
+      <tbody id="tbody">
+        <tr><td colspan="8"><div class="empty" id="empty"><h3>Carregando o plano…</h3><p>As ações aparecem aqui assim que o painel conectar. Se você tem acesso de edição, use “+ Nova ação” para incluir itens.</p></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="foot">Ferramenta de acompanhamento interno dos proprietários. As ações pré-cadastradas foram propostas a partir do histórico do caso (assembleias, notificações, contratos, certidão da matrícula 25.775 e cronograma rev02) e devem ser revisadas, priorizadas e atribuídas pela comissão. Não constitui aconselhamento jurídico definitivo.</p>
+</div>
+
+<script>
+/* Versão autônoma (GitHub/offline): emula o armazenamento compartilhado do claude.ai
+   usando o localStorage do navegador, com suporte a subcoleções (comentários).
+   Os dados ficam no dispositivo de cada pessoa. */
+(function(){
+  var KEY="moove_plano_db_v2";
+  var SEED=[{"acao": "Enviar a contrarresposta à Martins Ferreira (v3, com memorial)", "categoria": "Jurídico", "inicio": "", "obs": "Resposta formal à manifestação da MF de 21/09/2026; protocolar e guardar comprovante de recebimento.", "ordem": 1, "prazo": "", "prioridade": "Alta", "responsavel": "Daniele / Assessoria jurídica", "status": "Em andamento", "id": "a01"}, {"acao": "Cobrar formalmente a ABA pelo silêncio à notificação de distrato", "categoria": "Jurídico", "inicio": "", "obs": "A ABA não respondeu no prazo; constituir em mora por escrito (CC 422; CPC 397) com novo prazo curto.", "ordem": 2, "prazo": "", "prioridade": "Alta", "responsavel": "Daniele / Assessoria jurídica", "status": "A fazer", "id": "a02"}, {"acao": "Decidir sobre ajuizamento caso não haja acordo no prazo", "categoria": "Jurídico", "inicio": "", "obs": "Ação de rescisão + devolução integral + exigir contas contra ABA, MF, Masterpar e Zenaide.", "ordem": 3, "prazo": "", "prioridade": "Alta", "responsavel": "Daniele / Assessoria jurídica", "status": "A fazer", "id": "a03"}, {"acao": "Preparar depósito judicial das parcelas vincendas (consignação)", "categoria": "Jurídico", "inicio": "", "obs": "Para afastar mora e risco de cobrança/leilão enquanto tramitar o processo (CC 334+; CPC 539+).", "ordem": 4, "prazo": "", "prioridade": "Média", "responsavel": "Assessoria jurídica", "status": "A fazer", "id": "a04"}, {"acao": "Usar o precedente de rescisão registrada (AV.64/25.775) como alavanca", "categoria": "Jurídico", "inicio": "", "obs": "Distrato + revenda já formalizados no RGI p/ outro comprador — demonstra viabilidade do desfazimento.", "ordem": 5, "prazo": "", "prioridade": "Média", "responsavel": "Daniele", "status": "A fazer", "id": "a05"}, {"acao": "Contratar a auditoria de engenharia aprovada na AGE", "categoria": "Técnico / Auditoria", "inicio": "", "obs": "Escopo técnico, financeiro e orçamentário: conta a conta, nota a nota, linha por linha (2026).", "ordem": 6, "prazo": "", "prioridade": "Alta", "responsavel": "Comissão", "status": "Em andamento", "id": "a06"}, {"acao": "Anexar o parecer técnico do cronograma rev02 ao escopo da auditoria", "categoria": "Técnico / Auditoria", "inicio": "", "obs": "Parecer já elaborado; direciona pontos de verificação da auditoria.", "ordem": 7, "prazo": "", "prioridade": "Média", "responsavel": "Comissão", "status": "A fazer", "id": "a07"}, {"acao": "Exigir cronograma em formato gerencial", "categoria": "Técnico / Auditoria", "inicio": "", "obs": "Com durações, precedências, caminho crítico, curva S, marcos de suprimentos e habite-se, previsto × realizado.", "ordem": 8, "prazo": "", "prioridade": "Alta", "responsavel": "Comissão", "status": "A fazer", "id": "a08"}, {"acao": "Exigir memórias de cálculo de estrutura e instalações", "categoria": "Técnico / Auditoria", "inicio": "", "obs": "Aço (156.000 kg) por bitola, taxa de armadura; composição do déficit de ~R$ 1 mi na estrutura.", "ordem": 9, "prazo": "", "prioridade": "Média", "responsavel": "Comissão / Auditoria", "status": "A fazer", "id": "a09"}, {"acao": "Acompanhar marcos de concretagem e aderência ao cronograma", "categoria": "Técnico / Auditoria", "inicio": "", "obs": "Pisos 5º–7º; verificar ritmo real (concretagem só aos sábados) vs término de estrutura previsto.", "ordem": 10, "prazo": "", "prioridade": "Média", "responsavel": "Comissão", "status": "Em andamento", "id": "a10"}, {"acao": "Obter memória de cálculo da taxa de 18%", "categoria": "Financeiro", "inicio": "", "obs": "Base de incidência e exclusões contratuais (corretagem, marketing, jurídico); incidência sobre o déficit.", "ordem": 11, "prazo": "", "prioridade": "Alta", "responsavel": "Comissão", "status": "A fazer", "id": "a11"}, {"acao": "Reconciliar banco × apropriação", "categoria": "Financeiro", "inicio": "", "obs": "Realizado da planilha (~R$ 6,27 mi) × desembolso real (~R$ 4,5 mi); separar aplicações financeiras (CDB).", "ordem": 12, "prazo": "", "prioridade": "Alta", "responsavel": "Contadora / Comissão", "status": "A fazer", "id": "a12"}, {"acao": "Esclarecer pagamentos à MF e corretores sem nota fiscal", "categoria": "Financeiro", "inicio": "", "obs": "R$ 581.439,16 → MF Imóveis; R$ 97.043,70 → MF Advogados; marketing/planejamento; comissão terreno R$ 150 mil.", "ordem": 13, "prazo": "", "prioridade": "Alta", "responsavel": "Comissão / Auditoria", "status": "A fazer", "id": "a13"}, {"acao": "Contestar/retificar o boleto 1/18 da cota extra com os 18% embutidos", "categoria": "Financeiro", "inicio": "", "obs": "Combinado era refletir sobre os 18% antes; boleto saiu ainda com os 18% — pagar sob ressalva/recálculo.", "ordem": 14, "prazo": "", "prioridade": "Alta", "responsavel": "Daniele", "status": "Em andamento", "id": "a14"}, {"acao": "Acompanhar a resposta da ABA sobre a base dos 18%", "categoria": "Financeiro", "inicio": "", "obs": "Prometida para setembro/2026; proposta aprovada por unanimidade (incidir só sobre o previsto, não sobre o déficit).", "ordem": 15, "prazo": "", "prioridade": "Média", "responsavel": "Comissão", "status": "Em andamento", "id": "a15"}, {"acao": "Exigir comprovação/registro do memorial de incorporação (art. 32)", "categoria": "Documentação / Cartório", "inicio": "", "obs": "Certidão da matrícula 25.775 (22/09/2026) não registra memorial nem afetação; exigir esclarecimento.", "ordem": 16, "prazo": "", "prioridade": "Alta", "responsavel": "Comissão / Assessoria jurídica", "status": "A fazer", "id": "a16"}, {"acao": "Cobrar instituição do condomínio, CNPJ próprio e conta segregada", "categoria": "Documentação / Cartório", "inicio": "", "obs": "ABA admitiu que o condomínio não existe juridicamente e que tudo corre na conta da ABA.", "ordem": 17, "prazo": "", "prioridade": "Alta", "responsavel": "Comissão", "status": "A fazer", "id": "a17"}, {"acao": "Obter minutas das escrituras de instituição e convenção para análise", "categoria": "Documentação / Cartório", "inicio": "", "obs": "Avaliar antes da lavratura; custas extraordinárias cobradas à parte (~R$ 15 mil).", "ordem": 18, "prazo": "", "prioridade": "Média", "responsavel": "Comissão / Assessoria jurídica", "status": "A fazer", "id": "a18"}, {"acao": "Monitorar a matrícula 25.775 (novos atos)", "categoria": "Documentação / Cartório", "inicio": "", "obs": "Atualizar certidão periodicamente; registrar rescisões/revendas e andamento das frações.", "ordem": 19, "prazo": "", "prioridade": "Baixa", "responsavel": "Daniele", "status": "Em andamento", "id": "a19"}, {"acao": "Formalizar em ata a troca na Comissão de Representantes", "categoria": "Governança / Comissão", "inicio": "", "obs": "Pedro (303) entra no lugar da Daniele; Marina/Mariana (504) como suplente.", "ordem": 20, "prazo": "", "prioridade": "Baixa", "responsavel": "Comissão", "status": "A fazer", "id": "a20"}, {"acao": "Manter o repositório de documentos do caso compartilhado", "categoria": "Governança / Comissão", "inicio": "", "obs": "Pasta de contexto organizada; manter contratos, atas, notificações, certidões e pareceres atualizados.", "ordem": 21, "prazo": "", "prioridade": "Baixa", "responsavel": "Daniele", "status": "Em andamento", "id": "a21"}, {"acao": "Definir a próxima assembleia (30–60 dias) e sua pauta", "categoria": "Governança / Comissão", "inicio": "", "obs": "Pauta: acabamento/custos, resposta da ABA sobre 18%, andamento da auditoria, cronograma revisado.", "ordem": 22, "prazo": "", "prioridade": "Média", "responsavel": "Comissão", "status": "A fazer", "id": "a22"}, {"acao": "Alinhar estratégia coletiva entre os proprietários", "categoria": "Comunicação", "inicio": "", "obs": "Articular direito individual + coletivo (CDC); reunir adesões a eventual ação conjunta.", "ordem": 23, "prazo": "", "prioridade": "Média", "responsavel": "Proprietários", "status": "Em andamento", "id": "a23"}];
+  function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){}
+    var o={};SEED.forEach(function(d){var id=d.id;var c=Object.assign({},d);delete c.id;o["acoes/"+id]=c;});save(o);return o;}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
+  var store=load(), listeners=[];
+  function rid(){return (self.crypto&&crypto.randomUUID)?crypto.randomUUID():("x"+Date.now()+Math.random().toString(36).slice(2))}
+  function notify(){listeners.forEach(function(l){try{l()}catch(e){}})}
+  function children(col){var base=col+"/",out=[];Object.keys(store).forEach(function(k){if(k.indexOf(base)===0){var rest=k.slice(base.length);if(rest.indexOf("/")<0)out.push({id:rest,path:k})}});return out}
+  function snapCol(col){return {docs:children(col).map(function(e){return {id:e.id,data:function(){return store[e.path]}}})}}
+  function docRef(path){return {
+    path:path,
+    get:function(){return Promise.resolve({id:path.split("/").pop(),exists:store[path]!=null,data:function(){return store[path]}})},
+    set:function(data){store[path]=data;save(store);notify();return Promise.resolve()},
+    update:function(patch){store[path]=Object.assign({},store[path]||{},patch);save(store);notify();return Promise.resolve()},
+    delete:function(){delete store[path];Object.keys(store).forEach(function(k){if(k.indexOf(path+"/")===0)delete store[k]});save(store);notify();return Promise.resolve()},
+    collection:function(sub){return colRef(path+"/"+sub)}
+  }}
+  function colRef(col){return {
+    path:col,
+    onSnapshot:function(next){var fn=function(){next(snapCol(col))};listeners.push(fn);setTimeout(fn,0);return function(){listeners=listeners.filter(function(x){return x!==fn})}},
+    doc:function(id){return docRef(col+"/"+(id||rid()))},
+    add:function(data){var r=docRef(col+"/"+rid());return r.set(data).then(function(){return r})}
+  }}
+  var db={collection:function(p){return colRef(p)},doc:function(p){return docRef(p)}};
+  var user={can:function(){return true},isOwner:function(){return true},canEdit:function(){return true}};
+  window.claude={use:function(name){return Promise.resolve(name==="db"?db:name==="user"?user:null)}};
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var CATS=["Jurídico","ABA","Técnico / Auditoria","Financeiro","Documentação / Cartório","Governança / Comissão","Comunicação"];
+  var STATUSES=["A fazer","Em andamento","Concluída","Bloqueada"];
+  var PRIOS=["Alta","Média","Baixa"];
+  var db=null, canWrite=null, docs=[], unsub=null, readonlyLocked=false;
+
+  var $=function(s){return document.querySelector(s)};
+  var el=function(t,a,txt){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e};
+  function esc(s){return (s==null?"":String(s))}
+  function fmtDate(iso){if(!iso)return "—";var p=String(iso).split("-");if(p.length!==3)return esc(iso);return p[2]+"/"+p[1]+"/"+p[0]}
+  function todayISO(){var d=new Date();return d.toISOString().slice(0,10)}
+
+  // ---- filters state ----
+  var fq="",fcat="",fstatus="";
+  function passes(d){
+    if(fcat && d.categoria!==fcat) return false;
+    if(fstatus && d.status!==fstatus) return false;
+    if(fq){var h=(d.acao+" "+(d.responsavel||"")+" "+(d.obs||"")+" "+d.categoria).toLowerCase();if(h.indexOf(fq)<0)return false}
+    return true;
+  }
+
+  function setLive(state){
+    var dot=$("#dot"),t=$("#livetxt");
+    dot.className="dot"+(state==="on"?" on":state==="ro"?" ro":"");
+    t.textContent = state==="on"?"ao vivo — sincronizado":state==="ro"?"somente leitura":state==="off"?"sincronização indisponível":"conectando…";
+  }
+
+  function renderTiles(){
+    var c={total:docs.length,todo:0,prog:0,done:0,block:0};
+    docs.forEach(function(d){
+      if(d.status==="A fazer")c.todo++;else if(d.status==="Em andamento")c.prog++;
+      else if(d.status==="Concluída")c.done++;else if(d.status==="Bloqueada")c.block++;
+    });
+    $("#t-total").textContent=c.total;$("#t-todo").textContent=c.todo;$("#t-prog").textContent=c.prog;$("#t-done").textContent=c.done;$("#t-block").textContent=c.block;
+  }
+
+  var ST_COLOR={"A fazer":"var(--todo)","Em andamento":"var(--prog)","Concluída":"var(--done)","Bloqueada":"var(--block)"};
+  var PR_COLOR={"Alta":"var(--prio-alta)","Média":"var(--prio-media)","Baixa":"var(--prio-baixa)"};
+  function renderDashboard(){
+    var dash=$("#dash"); if(dash.hidden)return;
+    var total=docs.length;
+    var by={"A fazer":0,"Em andamento":0,"Concluída":0,"Bloqueada":0};
+    var byPr={"Alta":0,"Média":0,"Baixa":0};
+    var overdue=0,noPrazo=0,withPrazo=0,today=todayISO();
+    docs.forEach(function(d){
+      if(by[d.status]!=null)by[d.status]++;
+      if(byPr[d.prioridade]!=null)byPr[d.prioridade]++;
+      if(d.prazo){withPrazo++; if(d.status!=="Concluída"&&d.prazo<today)overdue++;} else noPrazo++;
+    });
+    var done=by["Concluída"], pct=total?Math.round(done/total*100):0;
+    var activePct=total?Math.round((by["Em andamento"])/total*100):0;
+    // progress stacked
+    var segOrder=["Concluída","Em andamento","A fazer","Bloqueada"];
+    function segSpans(counts,tot){return segOrder.map(function(s){var c=counts[s]||0;if(!c)return "";return '<span style="width:'+(c/tot*100)+'%;background:'+ST_COLOR[s]+'" title="'+s+': '+c+'"></span>'}).join("")}
+    var prog=total?segSpans(by,total):'<span style="width:100%;background:var(--chip-bg)"></span>';
+    // donut
+    var deg=0,stops=[];
+    segOrder.forEach(function(s){var c=by[s]||0;if(c>0){var a=deg;deg+=c/total*360;stops.push(ST_COLOR[s]+' '+a.toFixed(1)+'deg '+deg.toFixed(1)+'deg')}});
+    var donutBg= total? 'conic-gradient('+stops.join(',')+')' : 'var(--chip-bg)';
+    var legend=segOrder.map(function(s){return '<div class="li"><span class="sw" style="background:'+ST_COLOR[s]+'"></span>'+s+'<span class="lc">'+(by[s]||0)+'</span></div>'}).join("");
+    // category stacked
+    var cat=CATS.map(function(c){
+      var g=docs.filter(function(d){return d.categoria===c});
+      if(!g.length)return "";
+      var cc={"A fazer":0,"Em andamento":0,"Concluída":0,"Bloqueada":0};
+      g.forEach(function(d){if(cc[d.status]!=null)cc[d.status]++});
+      return '<div class="catrow"><div class="rt"><span>'+c+'</span><span class="ct">'+g.length+'</span></div><div class="seg">'+segSpans(cc,g.length)+'</div></div>';
+    }).join("") || '<div style="color:var(--muted);font-size:.8rem">Sem ações.</div>';
+    // priority
+    var maxPr=Math.max(1,byPr["Alta"],byPr["Média"],byPr["Baixa"]);
+    var pbars=PRIOS.map(function(p){return '<div class="pbar"><div class="rt"><span class="prio-'+p+'" style="font-weight:600">'+p+'</span><span class="ct">'+byPr[p]+'</span></div><div class="track"><div class="fill" style="width:'+(byPr[p]/maxPr*100)+'%;background:'+PR_COLOR[p]+'"></div></div></div>'}).join("");
+
+    dash.innerHTML=
+      '<div class="card"><h3>Progresso geral</h3>'+
+        '<div class="bigpct">'+pct+'%<small> concluído</small></div>'+
+        '<div class="progwrap">'+prog+'</div>'+
+        '<div class="statchips">'+
+          '<div class="statchip">Total <b>'+total+'</b></div>'+
+          '<div class="statchip">Em curso <b>'+by["Em andamento"]+'</b></div>'+
+          '<div class="statchip'+(overdue?' warn':'')+'">Vencidas <b>'+overdue+'</b></div>'+
+          '<div class="statchip">Sem prazo <b>'+noPrazo+'</b></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="card"><h3>Por status</h3><div class="donutwrap">'+
+        '<div class="donut" style="background:'+donutBg+'"><div class="hole"><span class="hn">'+total+'</span><span class="hl">ações</span></div></div>'+
+        '<div class="legend">'+legend+'</div>'+
+      '</div></div>'+
+      '<div class="card"><h3>Por categoria</h3><div class="catbar">'+cat+'</div></div>'+
+      '<div class="card"><h3>Por prioridade</h3><div class="pbars">'+pbars+'</div></div>';
+  }
+
+  function render(){
+    renderDashboard();
+    renderTiles();
+    var tb=$("#tbody"); tb.innerHTML="";
+    var list=docs.filter(passes);
+    if(!docs.length){
+      tb.appendChild(rowMsg(readonlyLocked?"Nenhuma ação cadastrada ainda.":"Nenhuma ação cadastrada. Use “+ Nova ação” para começar.","Plano vazio"));
+      return;
+    }
+    if(!list.length){tb.appendChild(rowMsg("Nenhuma ação corresponde aos filtros.","Sem resultados"));return;}
+    // group by category in CATS order
+    CATS.forEach(function(cat){
+      var g=list.filter(function(d){return d.categoria===cat});
+      if(!g.length)return;
+      g.sort(function(a,b){return (a.ordem||0)-(b.ordem||0)});
+      var ct=el("tr",{class:"cat"});var ctd=el("td",{colspan:"8"});ctd.appendChild(document.createTextNode(cat));
+      var cc=el("span",{class:"c-count"},g.length+(g.length===1?" ação":" ações"));ctd.appendChild(cc);ct.appendChild(ctd);tb.appendChild(ct);
+      g.forEach(function(d){tb.appendChild(rowFor(d))});
+    });
+  }
+  function rowMsg(msg,title){
+    var tr=el("tr");var td=el("td",{colspan:"8"});var e=el("div",{class:"empty"});e.appendChild(el("h3",null,title));e.appendChild(el("p",null,msg));td.appendChild(e);tr.appendChild(td);return tr;
+  }
+
+  function rowFor(d){
+    var tr=el("tr");
+    tr.appendChild(el("td",{class:"num mono"},String(d.ordem||"")));
+    // ação + obs
+    var tdA=el("td");var a=el("div",{class:"acao-txt"},d.acao);tdA.appendChild(a);
+    if(d.obs){tdA.appendChild(el("div",{class:"obs"},d.obs))}
+    tr.appendChild(tdA);
+    // status select
+    var tdS=el("td");
+    var sel=el("select",{class:"status","data-s":d.status,"aria-label":"Status"});
+    STATUSES.forEach(function(s){var o=el("option",null,s);if(s===d.status)o.selected=true;sel.appendChild(o)});
+    if(canWrite===false){sel.disabled=true}
+    sel.addEventListener("change",function(){writeDoc(d.id,{status:sel.value},sel)});
+    tdS.appendChild(sel);tr.appendChild(tdS);
+    // prioridade
+    var tdP=el("td");tdP.appendChild(el("span",{class:"chip prio-"+(d.prioridade||"Média")},d.prioridade||"—"));tr.appendChild(tdP);
+    // responsavel
+    tr.appendChild(el("td",null,d.responsavel||"—"));
+    // datas
+    var tdI=el("td",{class:"date-cell mono"},fmtDate(d.inicio));tr.appendChild(tdI);
+    var tdF=el("td",{class:"date-cell mono"});tdF.textContent=fmtDate(d.prazo);
+    if(d.prazo && d.status!=="Concluída" && d.prazo<todayISO()){tdF.className+=" date-late";tdF.title="Prazo vencido"}
+    tr.appendChild(tdF);
+    // actions
+    var tdAct=el("td");var box=el("div",{class:"rowact"});
+    var cmt=el("button",{class:"iconbtn cmt",title:"Comentários"});cmt.appendChild(document.createTextNode("comentários"));
+    var nc=(d.nCom||0); if(nc){var b=el("span",{class:"ccount"},String(nc));cmt.appendChild(b);}
+    cmt.addEventListener("click",function(){openComments(d)});box.appendChild(cmt);
+    if(canWrite!==false){
+      var e=el("button",{class:"iconbtn",title:"Editar"},"editar");e.addEventListener("click",function(){openModal(d)});box.appendChild(e);
+      var del=el("button",{class:"iconbtn del",title:"Excluir"},"excluir");del.addEventListener("click",function(){confirmDel(d,del)});box.appendChild(del);
+    }
+    tdAct.appendChild(box);tr.appendChild(tdAct);
+    return tr;
+  }
+
+  function confirmDel(d,btn){
+    var box=btn.parentNode;box.innerHTML="";
+    box.appendChild(el("span",{style:"font-size:.75rem;color:var(--block);align-self:center"},"Excluir?"));
+    var yes=el("button",{class:"iconbtn del"},"sim");yes.addEventListener("click",function(){deleteDoc(d.id)});
+    var no=el("button",{class:"iconbtn"},"não");no.addEventListener("click",render);
+    box.appendChild(yes);box.appendChild(no);
+  }
+
+  // ---- writes ----
+  function lockReadonly(){canWrite=false;readonlyLocked=true;$("#robanner").hidden=false;$("#add").hidden=true;setLive("ro");render();}
+  function writeDoc(id,patch,ctrl){
+    if(!db){return}
+    patch.atualizadoEm=new Date().toISOString();
+    db.doc("acoes/"+id).update(patch).catch(function(e){
+      if(e&&e.code==="invalid_argument"){lockReadonly();}
+      else{if(ctrl){ctrl.title="Falha ao salvar — tente de novo"}}
+    });
+  }
+  function deleteDoc(id){ if(!db)return; db.doc("acoes/"+id).delete().catch(function(){}); }
+  function addDoc(data){
+    if(!db)return;
+    var id=(self.crypto&&crypto.randomUUID)?crypto.randomUUID():("a"+Date.now());
+    var maxO=docs.reduce(function(m,d){return Math.max(m,d.ordem||0)},0);
+    data.ordem=maxO+1; data.criadoEm=new Date().toISOString(); data.atualizadoEm=data.criadoEm;
+    db.collection("acoes").doc(id).set(data).catch(function(e){ if(e&&e.code==="invalid_argument"){lockReadonly();} });
+  }
+
+  // ---- modal ----
+  var editing=null;
+  function openModal(d){
+    editing=d||null;
+    var scrim=el("div",{class:"scrim"});
+    var m=el("div",{class:"modal",role:"dialog","aria-modal":"true"});
+    m.appendChild(el("h2",null,d?"Editar ação":"Nova ação"));
+    function field(lbl,node){var f=el("div",{class:"field"});var l=el("label",{class:"f"},lbl);f.appendChild(l);f.appendChild(node);return f}
+    var iAcao=el("textarea",{id:"m-acao",placeholder:"Descreva a ação…"});iAcao.value=d?d.acao:"";
+    var iCat=el("select",{id:"m-cat"});CATS.forEach(function(c){var o=el("option",null,c);if(d&&d.categoria===c)o.selected=true;iCat.appendChild(o)});
+    var iStatus=el("select",{id:"m-status"});STATUSES.forEach(function(s){var o=el("option",null,s);if(d&&d.status===s)o.selected=true;else if(!d&&s==="A fazer")o.selected=true;iStatus.appendChild(o)});
+    var iPrio=el("select",{id:"m-prio"});PRIOS.forEach(function(p){var o=el("option",null,p);if((d&&d.prioridade===p)||(!d&&p==="Média"))o.selected=true;iPrio.appendChild(o)});
+    var iResp=el("input",{type:"text",id:"m-resp",placeholder:"Ex.: Comissão, Daniele, Assessoria jurídica"});iResp.value=d&&d.responsavel?d.responsavel:"";
+    var iIni=el("input",{type:"date",id:"m-ini"});iIni.value=d&&d.inicio?d.inicio:"";
+    var iPraz=el("input",{type:"date",id:"m-praz"});iPraz.value=d&&d.prazo?d.prazo:"";
+    var iObs=el("textarea",{id:"m-obs",placeholder:"Notas, referências de documentos, próximos passos…"});iObs.value=d&&d.obs?d.obs:"";
+    m.appendChild(field("Ação",iAcao));
+    var g=el("div",{class:"grid2"});g.appendChild(field("Categoria",iCat));g.appendChild(field("Status",iStatus));m.appendChild(g);
+    var g2=el("div",{class:"grid2"});g2.appendChild(field("Prioridade",iPrio));g2.appendChild(field("Responsável",iResp));m.appendChild(g2);
+    var g3=el("div",{class:"grid2"});g3.appendChild(field("Início",iIni));g3.appendChild(field("Prazo",iPraz));m.appendChild(g3);
+    m.appendChild(field("Observações",iObs));
+    var foot=el("div",{class:"modal-foot"});
+    var cancel=el("button",{class:"btn ghost"},"Cancelar");cancel.addEventListener("click",close);
+    var save=el("button",{class:"btn primary"},d?"Salvar":"Adicionar");
+    save.addEventListener("click",function(){
+      var acao=iAcao.value.trim(); if(!acao){iAcao.focus();return}
+      var data={acao:acao,categoria:iCat.value,status:iStatus.value,prioridade:iPrio.value,responsavel:iResp.value.trim(),inicio:iIni.value,prazo:iPraz.value,obs:iObs.value.trim()};
+      if(d){writeDoc(d.id,data)}else{addDoc(data)}
+      close();
+    });
+    foot.appendChild(cancel);foot.appendChild(save);m.appendChild(foot);
+    scrim.appendChild(m);document.body.appendChild(scrim);
+    scrim.addEventListener("click",function(e){if(e.target===scrim)close()});
+    function onKey(e){if(e.key==="Escape")close()}
+    document.addEventListener("keydown",onKey);
+    function close(){document.removeEventListener("keydown",onKey);scrim.remove()}
+    window.__closeModal=close;
+    iAcao.focus();
+  }
+
+  // ---- comentários ----
+  function fmtDT(iso){if(!iso)return "";var d=new Date(iso);if(isNaN(d))return "";function p(n){return (n<10?"0":"")+n}return p(d.getDate())+"/"+p(d.getMonth()+1)+"/"+d.getFullYear()+" "+p(d.getHours())+":"+p(d.getMinutes())}
+  function openComments(d){
+    var unsubC=null;
+    var scrim=el("div",{class:"scrim"});
+    var m=el("div",{class:"modal",role:"dialog","aria-modal":"true"});
+    m.appendChild(el("h2",null,"Comentários"));
+    m.appendChild(el("div",{style:"font-size:.85rem;color:var(--muted);margin:-6px 0 12px"},d.acao));
+    var list=el("div",{class:"clist"});list.appendChild(el("div",{class:"cempty"},"Carregando…"));m.appendChild(list);
+    function renderList(items){
+      list.innerHTML="";
+      if(!items.length){list.appendChild(el("div",{class:"cempty"},"Nenhum comentário ainda."+(canWrite!==false?" Seja o primeiro a comentar.":"")));return}
+      items.sort(function(a,b){return (a.quando||"").localeCompare(b.quando||"")});
+      items.forEach(function(c){
+        var bx=el("div",{class:"cbox"});
+        var meta=el("div",{class:"meta"});
+        meta.appendChild(el("b",null,c.nome||"Anônimo"));
+        meta.appendChild(el("span",null,fmtDT(c.quando)));
+        bx.appendChild(meta);bx.appendChild(el("div",{class:"txt"},c.txt||""));
+        list.appendChild(bx);
+      });
+      list.scrollTop=list.scrollHeight;
+    }
+    if(canWrite!==false && db){
+      var nf=el("div",{class:"field"});nf.appendChild(el("label",{class:"f"},"Novo comentário"));
+      var nome=el("input",{type:"text",placeholder:"Seu nome (opcional)"});try{nome.value=localStorage.getItem("moove_nome")||""}catch(e){}
+      nf.appendChild(nome);m.appendChild(nf);
+      var ta=el("textarea",{placeholder:"Escreva um comentário…",style:"margin-bottom:8px"});m.appendChild(ta);
+      var foot=el("div",{class:"modal-foot"});
+      var cancel=el("button",{class:"btn ghost"},"Fechar");cancel.addEventListener("click",close);
+      var add=el("button",{class:"btn primary"},"Adicionar comentário");
+      add.addEventListener("click",function(){
+        var t=ta.value.trim();if(!t)return;
+        var nm=nome.value.trim();try{localStorage.setItem("moove_nome",nm)}catch(e){}
+        db.collection("acoes/"+d.id+"/comentarios").add({txt:t,nome:nm,quando:new Date().toISOString()}).catch(function(){});
+        ta.value="";ta.focus();
+      });
+      foot.appendChild(cancel);foot.appendChild(add);m.appendChild(foot);
+    }else{
+      var foot2=el("div",{class:"modal-foot"});
+      foot2.appendChild(el("span",{style:"font-size:.75rem;color:var(--muted)"},"Somente leitura"));
+      var c2=el("button",{class:"btn ghost"},"Fechar");c2.addEventListener("click",close);foot2.appendChild(c2);m.appendChild(foot2);
+    }
+    scrim.appendChild(m);document.body.appendChild(scrim);
+    scrim.addEventListener("click",function(e){if(e.target===scrim)close()});
+    function onKey(e){if(e.key==="Escape")close()}
+    document.addEventListener("keydown",onKey);
+    if(db){
+      unsubC=db.collection("acoes/"+d.id+"/comentarios").onSnapshot(function(snap){
+        var items=snap.docs.map(function(s){var o=s.data()||{};o.id=s.id;return o});
+        renderList(items);
+        if(canWrite!==false && (d.nCom||0)!==items.length){ db.doc("acoes/"+d.id).update({nCom:items.length}).catch(function(){}); }
+      },function(){renderList([])});
+    }else{renderList([])}
+    function close(){document.removeEventListener("keydown",onKey);if(unsubC){unsubC();unsubC=null}scrim.remove()}
+  }
+
+  // ---- filters wiring ----
+  $("#q").addEventListener("input",function(){fq=this.value.trim().toLowerCase();render()});
+  $("#f-status").addEventListener("change",function(){fstatus=this.value;render()});
+  (function(){var s=$("#f-cat");CATS.forEach(function(c){s.appendChild(el("option",null,c))});s.addEventListener("change",function(){fcat=this.value;render()})})();
+  $("#add").addEventListener("click",function(){openModal(null)});
+  (function(){
+    var btn=$("#toggledash"),dash=$("#dash"),collapsed=false;
+    try{collapsed=localStorage.getItem("moove_dash_collapsed")==="1"}catch(e){}
+    function apply(){dash.hidden=collapsed;btn.textContent=collapsed?"Mostrar painel":"Ocultar painel";if(!collapsed)renderDashboard()}
+    apply();
+    btn.addEventListener("click",function(){collapsed=!collapsed;try{localStorage.setItem("moove_dash_collapsed",collapsed?"1":"0")}catch(e){}apply()});
+  })();
+
+  // ---- boot ----
+  function start(){
+    if(!window.claude||!claude.use){setLive("off");$("#empty")&&($("#empty").innerHTML="");render();return}
+    claude.use("user").then(function(u){
+      if(u){ try{ var c=u.can&&u.can("data.write"); if(c===false){canWrite=false} else if(c===true){canWrite=true} }catch(e){} }
+    }).catch(function(){});
+    claude.use("db").then(function(d){
+      if(!d){setLive("off");render();return}
+      db=d; setLive(canWrite===false?"ro":"on");
+      if(canWrite!==false){$("#add").hidden=false} else {$("#robanner").hidden=false}
+      unsub=db.collection("acoes").onSnapshot(function(snap){
+        docs=snap.docs.map(function(s){var o=s.data()||{};o.id=s.id;return o});
+        if(canWrite===false){$("#robanner").hidden=false}
+        render();
+      },function(err){ setLive("off"); });
+    }).catch(function(){setLive("off");render()});
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();
+</script>
+
+</body>
+</html>
